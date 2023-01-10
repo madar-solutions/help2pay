@@ -1,0 +1,58 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/ReferralFactory.php
+    - database/factories/EducationPackageFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/WalletFactory.php
+    - database/factories/PaymentFactory.php
+    - database/factories/InformationFactory.php
+    - database/factories/EarningFactory.php
+    - database/factories/BalanceFactory.php
+    - database/factories/ReferralDepthFactory.php
+    - database/factories/BalanceExtraFactory.php
+    - database/factories/WithdrawalFactory.php
+    - database/factories/NotificationFactory.php
+    - database/factories/SliderFactory.php
+    - database/migrations/2023_01_10_072607_create_users_table.php
+    - database/migrations/2023_01_10_072608_create_referrals_table.php
+    - database/migrations/2023_01_10_072609_create_education_packages_table.php
+    - database/migrations/2023_01_10_072610_create_orders_table.php
+    - database/migrations/2023_01_10_072611_create_wallets_table.php
+    - database/migrations/2023_01_10_072612_create_payments_table.php
+    - database/migrations/2023_01_10_072613_create_information_table.php
+    - database/migrations/2023_01_10_072614_create_earnings_table.php
+    - database/migrations/2023_01_10_072615_create_balances_table.php
+    - database/migrations/2023_01_10_072616_create_referral_depths_table.php
+    - database/migrations/2023_01_10_072617_create_balance_extras_table.php
+    - database/migrations/2023_01_10_072618_create_withdrawals_table.php
+    - database/migrations/2023_01_10_072619_create_notifications_table.php
+    - database/migrations/2023_01_10_072620_create_sliders_table.php
+    - app/Models/User.php
+    - app/Models/Referral.php
+    - app/Models/EducationPackage.php
+    - app/Models/Order.php
+    - app/Models/Wallet.php
+    - app/Models/Payment.php
+    - app/Models/Information.php
+    - app/Models/Earning.php
+    - app/Models/Balance.php
+    - app/Models/ReferralDepth.php
+    - app/Models/BalanceExtra.php
+    - app/Models/Withdrawal.php
+    - app/Models/Notification.php
+    - app/Models/Slider.php
+models:
+    User: { username: 'string:30 unique', name: 'string:50', email: 'string:60 unique', phone: 'string:30 unique', gender: 'enum:male,female nullable', status: 'enum:active,blocked', invitation_code: 'string:30 unique', softdeletes: softDeletes, relationships: { hasOne: Referral } }
+    Referral: { user_id: 'id forgin', team_count: 'integer unsigned nullable', softdeletes: softDeletes, timeStamps: false }
+    EducationPackage: { name: 'string:250', description: 'longtext nullable', price: 'integer:20 unsigned', sort_order: 'integer:20 unsigned', duration: 'integer:20 unsigned', status: 'enum:enabled,disabled', softdeletes: softDeletes }
+    Order: { education_package_id: 'id forgin', package_name: 'string:250', total: 'integer:20 unsigned', user_id: 'id forgin', valid_until: datetime, status: 'enum:active,expired,pending,rejected', softdeletes: softDeletes }
+    Wallet: { user_id: 'id forgin', address: 'string:100 unique', private_key: 'string:100 unique', timeStamps: false, softdeletes: softDeletes }
+    Payment: { wallet_id: 'id forgin', user_id: 'id forgin', order_id: 'id forgin', status: 'enum:complated,pending,expired', transfer_status: 'enum:pending,complated,failed', softdeletes: softDeletes }
+    Information: { title: longtext, description: 'longtext nullable', softdeletes: softDeletes }
+    Earning: { user_id: 'id forgin', from_user_id: 'id forgin', amount: 'decimal:8,2', percentage: 'decimal:8,2', softdeletes: softDeletes }
+    Balance: { user_id: 'id forgin', total_earnings: 'decimal:8,2 nullable', total_withdrawal: 'decimal:8,2 nullable', total_orders: 'decimal:8,2 nullable', total_balance_extra: 'decimal:8,2 nullable', final_balance: 'decimal:8,2 nullable', timeStamps: false }
+    ReferralDepth: { depth: 'string:10 unique', percentage: 'decimal:8,2', timeStamps: false }
+    BalanceExtra: { user_id: 'id forgin', amount: 'decimal:8,2', softdeletes: softDeletes }
+    Withdrawal: { user_id: 'id forgin', amount: 'decimal:8,2', status: 'enum:approved,rejected,pending', softdeletes: softDeletes }
+    Notification: { user_id: 'id forgin', message: text, type: 'string:40', related_id: 'integer unsigned nullable' }
+    Slider: { title: 'longtext nullable', sort_order: 'integer unsigned nullable' }
